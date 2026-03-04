@@ -49,3 +49,16 @@ def mark_attendance(request):
         return render(request,'attendance.html',{'success':'Attendance marked successfully'})
 
     return render(request,'attendance.html',{'already_marked':already_marked})
+
+@login_required
+def attendance_history(request):
+
+    records = Attendance.objects.filter(
+        user=request.user
+    ).order_by('-date')
+
+    return render(
+        request,
+        'attendance_history.html',
+        {'records':records}
+    )

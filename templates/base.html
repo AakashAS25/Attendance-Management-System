@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Attendance System</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -9,25 +10,97 @@
 
 <body class="bg-gray-100">
 
-<nav class="bg-blue-600 p-4 text-white flex justify-between">
+<div class="flex h-screen">
 
-<h1 class="text-xl font-bold">Attendance System</h1>
+<!-- Sidebar -->
 
-<div>
+<div class="w-64 bg-blue-700 text-white flex flex-col">
 
-<span class="mr-4">Welcome {{ request.user.username }}</span>
+<h2 class="text-2xl font-bold p-6 border-b border-blue-500">
+Attendance System
+</h2>
 
-<a href="/logout/" class="bg-red-500 px-3 py-1 rounded">Logout</a>
+<a href="/dashboard/" class="p-4 hover:bg-blue-600">
+Dashboard
+</a>
+
+{% if request.user.is_superuser %}
+
+<a href="/leave/manage/" class="p-4 hover:bg-blue-600">
+Manage Leaves
+</a>
+
+<a href="/wfh/manage/" class="p-4 hover:bg-blue-600">
+Manage WFH
+</a>
+
+{% endif %}
+
+
+
+<a href="/attendance/mark/" class="p-4 hover:bg-blue-600">
+Mark Attendance
+</a>
+
+<a href="/attendance/history/" class="p-4 hover:bg-blue-600">
+Attendance History
+</a>
+
+<a href="/leave/request/" class="p-4 hover:bg-blue-600">
+Leave Request
+</a>
+
+<a href="/leave/status/" class="p-4 hover:bg-blue-600">
+Leave Status
+</a>
+
+<a href="/wfh/request/" class="p-4 hover:bg-blue-600">
+Work From Home
+</a>
+
+<a href="/wfh/status/" class="p-4 hover:bg-blue-600">
+WFH Status
+</a>
+
+<a href="/logout/" class="p-4 hover:bg-red-500 mt-auto">
+Logout
+</a>
 
 </div>
 
-</nav>
+
+<!-- Main Content -->
+
+<div class="flex-1">
+
+<!-- Top Bar -->
+
+<div class="bg-white shadow p-4 flex justify-between">
+
+<h2 class="font-semibold">Dashboard</h2>
+
+<div>
+
+<span class="text-gray-600">
+Welcome {{ request.user.username }}
+</span>
+
+</div>
+
+</div>
+
+
+<!-- Page Content -->
 
 <div class="p-8">
 
 {% block content %}
 
 {% endblock %}
+
+</div>
+
+</div>
 
 </div>
 

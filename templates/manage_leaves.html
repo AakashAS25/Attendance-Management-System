@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="text-2xl font-bold mb-6">Manage Leave Requests</h2>
+
+<table class="w-full bg-white shadow">
+
+<thead class="bg-gray-200">
+
+<tr>
+
+<th class="p-3">Employee</th>
+<th class="p-3">Type</th>
+<th class="p-3">Start</th>
+<th class="p-3">End</th>
+<th class="p-3">Status</th>
+<th class="p-3">Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for leave in leaves %}
+
+<tr class="border-b">
+
+<td class="p-3">{{ leave.user.username }}</td>
+<td class="p-3">{{ leave.leave_type }}</td>
+<td class="p-3">{{ leave.start_date }}</td>
+<td class="p-3">{{ leave.end_date }}</td>
+<td class="p-3">{{ leave.status }}</td>
+
+<td class="p-3">
+
+{% if leave.status == "Pending" %}
+
+<a href="/leave/approve/{{ leave.id }}/"
+class="bg-green-500 text-white px-3 py-1 rounded">
+Approve
+</a>
+
+<a href="/leave/reject/{{ leave.id }}/"
+class="bg-red-500 text-white px-3 py-1 rounded">
+Reject
+</a>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endblock %}
