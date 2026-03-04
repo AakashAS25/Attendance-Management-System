@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="text-2xl font-bold mb-6">Work From Home Request</h2>
+
+<div class="bg-white p-6 rounded shadow w-96">
+
+<form method="POST">
+
+{% csrf_token %}
+
+<input type="date" name="date"
+class="border p-2 w-full mb-4 rounded">
+
+<textarea name="reason"
+class="border p-2 w-full mb-4 rounded"
+placeholder="Reason"></textarea>
+
+<button
+class="bg-blue-600 text-white px-4 py-2 rounded">
+
+Submit
+
+</button>
+
+</form>
+
+{% if success %}
+<p class="text-green-600 mt-3">{{ success }}</p>
+{% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+
+<div class="grid grid-cols-3 gap-6">
+
+<a href="/attendance/mark/" 
+class="bg-white shadow p-6 rounded hover:shadow-lg">
+
+<h3 class="text-lg font-semibold">Mark Attendance</h3>
+
+<p class="text-gray-500">Mark today's attendance</p>
+
+</a>
+
+<a href="/leave/request/" 
+class="bg-white shadow p-6 rounded hover:shadow-lg">
+
+<h3 class="text-lg font-semibold">Request Leave</h3>
+
+<p class="text-gray-500">Apply for leave</p>
+
+</a>
+
+<a href="/wfh/request/" 
+class="bg-white shadow p-6 rounded hover:shadow-lg">
+
+<h3 class="text-lg font-semibold">Work From Home</h3>
+
+<p class="text-gray-500">Request WFH</p>
+
+</a>
+
+</div>
+
+{% endblock %}

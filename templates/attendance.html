@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="text-2xl font-bold mb-6">Mark Attendance</h2>
+
+<div class="bg-white p-6 rounded shadow w-96">
+
+{% if already_marked %}
+
+<p class="text-green-600">Attendance already marked today</p>
+
+{% else %}
+
+<form method="POST">
+
+{% csrf_token %}
+
+<select name="status"
+class="border p-2 w-full mb-4 rounded">
+
+<option value="Present">Present</option>
+<option value="Absent">Absent</option>
+
+</select>
+
+<button
+class="bg-blue-600 text-white px-4 py-2 rounded">
+
+Submit
+
+</button>
+
+</form>
+
+{% endif %}
+
+{% if error %}
+<p class="text-red-500 mt-3">{{ error }}</p>
+{% endif %}
+
+{% if success %}
+<p class="text-green-600 mt-3">{{ success }}</p>
+{% endif %}
+
+</div>
+
+{% endblock %}

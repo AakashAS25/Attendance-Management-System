@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Attendance System</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gray-100">
+
+<nav class="bg-blue-600 p-4 text-white flex justify-between">
+
+<h1 class="text-xl font-bold">Attendance System</h1>
+
+<div>
+
+<span class="mr-4">Welcome {{ request.user.username }}</span>
+
+<a href="/logout/" class="bg-red-500 px-3 py-1 rounded">Logout</a>
+
+</div>
+
+</nav>
+
+<div class="p-8">
+
+{% block content %}
+
+{% endblock %}
+
+</div>
+
+</body>
+</html>
