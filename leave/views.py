@@ -1,7 +1,10 @@
+from datetime import date
+from wfh.models import WorkFromHome
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import LeaveRequest
+
 
 @login_required
 def request_leave(request):
@@ -13,6 +16,32 @@ def request_leave(request):
         end_date = request.POST.get('end_date')
         reason = request.POST.get('reason')
 
+        today = date.today()
+
+        start_date_obj = date.fromisoformat(start_date)
+        end_date_obj = date.fromisoformat(end_date)
+
+        if start_date_obj < today or end_date_obj < today:
+            return render(request,'leave_request.html',{
+                'error':'You cannot request leave for past dates'
+            })
+
+        if end_date_obj < start_date_obj:
+            return render(request,'leave_request.html',{
+                'error':'End date cannot be before start date'
+            })
+        
+        wfh_exists = WorkFromHome.objects.filter(
+            user=request.user,
+            date__gte=start_date_obj,
+            date__lte=end_date_obj
+        ).exists()
+
+        if wfh_exists:
+            return render(request,'leave_request.html',{
+                'error':'WFH already requested during this period'
+            })
+
         LeaveRequest.objects.create(
             user=request.user,
             leave_type=leave_type,
@@ -20,10 +49,11 @@ def request_leave(request):
             end_date=end_date,
             reason=reason
         )
+        
 
         return render(request,'leave_request.html',{'success':'Leave request submitted'})
 
-    return render(request,'leave_request.html')
+    return render(request,'leave_request.html',{'today':date.today()})
 
 @login_required
 def leave_status(request):

@@ -1,6 +1,8 @@
+from datetime import date
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import WorkFromHome
+from leave.models import LeaveRequest
 from django.contrib.admin.views.decorators import staff_member_required
 
 @login_required
@@ -8,8 +10,27 @@ def request_wfh(request):
 
     if request.method == "POST":
 
-        date = request.POST.get('date')
+        wfh_date = request.POST.get('date')
         reason = request.POST.get('reason')
+
+        today = date.today()
+        selected_date = date.fromisoformat(wfh_date)
+
+        if selected_date < today:
+            return render(request,'wfh_request.html',{
+                'error':'You cannot request WFH for past dates'
+            })
+        
+        leave_exists = LeaveRequest.objects.filter(
+            user=request.user,
+            start_date__lte=selected_date,
+            end_date__gte=selected_date
+        ).exists()
+
+        if leave_exists:
+            return render(request,'wfh_request.html',{
+                'error':'Leave already requested for this date'
+            })
 
         WorkFromHome.objects.create(
             user=request.user,

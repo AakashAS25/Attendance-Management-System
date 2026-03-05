@@ -19,10 +19,10 @@ class="border p-2 w-full mb-4 rounded">
 
 </select>
 
-<input type="date" name="start_date"
+<input type="date" name="start_date" min="{{ today }}"
 class="border p-2 w-full mb-4 rounded">
 
-<input type="date" name="end_date"
+<input type="date" name="end_date" min="{{ today }}"
 class="border p-2 w-full mb-4 rounded">
 
 <textarea name="reason"
@@ -37,6 +37,10 @@ Submit
 </button>
 
 </form>
+
+{% if error %}
+<p class="text-red-500 mt-3">{{ error }}</p>
+{% endif %}
 
 {% if success %}
 <p class="text-green-600 mt-3">{{ success }}</p>
